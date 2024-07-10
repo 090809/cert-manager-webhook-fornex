@@ -13,8 +13,8 @@ certManager:
   serviceAccountName: cert-manager
 
 image:
-  repository: mycompany/webhook-image
-  tag: latest
+  repository: ghcr.io/090809/cert-manager-webhook-fornex
+  tag: v0.1.0
   pullPolicy: IfNotPresent
 
 nameOverride: ""
