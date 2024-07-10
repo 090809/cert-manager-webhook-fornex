@@ -73,8 +73,7 @@ func (s *Solver) Present(ch *acme.ChallengeRequest) error {
 	}
 
 	domain := strings.TrimSuffix(ch.ResolvedZone, ".")
-	entity := strings.TrimSuffix(ch.ResolvedFQDN, "."+ch.ResolvedZone)
-	name := strings.TrimSuffix(ch.ResolvedFQDN, ".")
+	name := strings.TrimSuffix(ch.ResolvedFQDN, "."+ch.ResolvedZone)
 	records, err := client.RetrieveRecords(context.Background(), domain)
 	if err != nil {
 		return errors.Wrap(err, "retrieve records error")
@@ -88,7 +87,7 @@ func (s *Solver) Present(ch *acme.ChallengeRequest) error {
 	}
 
 	id, err := client.CreateRecord(context.Background(), domain, fornex.Record{
-		Host:  entity,
+		Host:  name,
 		Type:  "TXT",
 		Value: ch.Key,
 		TTL:   120,
@@ -115,7 +114,7 @@ func (s *Solver) CleanUp(ch *acme.ChallengeRequest) error {
 	}
 
 	domain := strings.TrimSuffix(ch.ResolvedZone, ".")
-	name := strings.TrimSuffix(strings.TrimSuffix(ch.ResolvedFQDN, ch.ResolvedZone), ".")
+	name := strings.TrimSuffix(ch.ResolvedFQDN, "."+ch.ResolvedZone)
 	records, err := client.RetrieveRecords(context.Background(), domain)
 	if err != nil {
 		return errors.Wrap(err, "retrieve records error")
