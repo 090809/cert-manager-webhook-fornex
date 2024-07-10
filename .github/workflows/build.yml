@@ -24,13 +24,13 @@ jobs:
       id: meta
       uses: docker/metadata-action@v4
       with:
-        images: ${{ env.IMAGE_REGISTRY }}/porkbun-webhook
+        images: ${{ env.IMAGE_REGISTRY }}/cert-manager-webhook-fornex
 
     - name: Build image
       id: build-image
       uses: redhat-actions/buildah-build@v2
       with:
-        image: porkbun-webhook
+        image: cert-manager-webhook-fornex
         tags: ${{ steps.meta.outputs.tags }}
         labels: ${{ steps.meta.outputs.labels }}
         containerfiles: |

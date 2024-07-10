@@ -1,0 +1,6 @@
+{
+    "apiKeySecretRef": {
+        "name": "fornex-key",
+        "key": "api-key"
+    }
+}
