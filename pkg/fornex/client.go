@@ -129,7 +129,7 @@ func (c *Client) postRequest(ctx context.Context, path string, body []byte) (*ht
 
 	b := bytes.NewReader(body)
 
-	req, err := http.NewRequest(http.MethodGet, u.String(), b)
+	req, err := http.NewRequest(http.MethodPost, u.String(), b)
 	if err != nil {
 		return nil, errors.Wrap(err, "failed to create request")
 	}
