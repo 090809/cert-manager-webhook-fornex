@@ -115,7 +115,7 @@ func (s *Solver) CleanUp(ch *acme.ChallengeRequest) error {
 	}
 
 	domain := strings.TrimSuffix(ch.ResolvedZone, ".")
-	name := strings.TrimSuffix(ch.ResolvedFQDN, ".")
+	name := strings.TrimSuffix(strings.TrimSuffix(ch.ResolvedFQDN, ch.ResolvedZone), ".")
 	records, err := client.RetrieveRecords(context.Background(), domain)
 	if err != nil {
 		return errors.Wrap(err, "retrieve records error")
@@ -125,7 +125,6 @@ func (s *Solver) CleanUp(ch *acme.ChallengeRequest) error {
 		if record.Type == "TXT" && record.Host == name && record.Value == ch.Key {
 			id := record.ID
 
-			record.Value = ch.Key
 			err = client.DeleteRecord(context.Background(), domain, id)
 			if err != nil {
 				return errors.Wrap(err, "delete record error")
